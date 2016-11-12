@@ -4,11 +4,7 @@
 #include <QSerialPort>
 #include <QDebug>
 #include <QCoreApplication>
-#include <QTimer>
 
-#include <fcntl.h>
-#include <unistd.h>
-#include <linux/input.h>
 #include <linux/uinput.h>
 
 MediaKeyBoardReceiver::MediaKeyBoardReceiver(QObject *parent)
