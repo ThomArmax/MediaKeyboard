@@ -16,3 +16,13 @@ SOURCES += main.cpp \
 HEADERS += \
     mediakeyboardreceiver.h \
     uinputwrapper.h
+
+isEmpty(PREFIX) {
+    PREFIX = /usr/local
+}
+
+target.path = $$PREFIX/bin
+
+unix {
+    INSTALLS += target
+}
