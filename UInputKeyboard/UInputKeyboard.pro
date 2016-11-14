@@ -24,5 +24,14 @@ isEmpty(PREFIX) {
 target.path = $$PREFIX/bin
 
 unix {
-    INSTALLS += target
+    sysv.files = $${_PRO_FILE_PWD_}/uinputkeyboard.sh
+    sysv.path = /etc/init.d/
+    updaterc.target = update-rc
+    updaterc.path = /etc/init.d/
+    updaterc.commands = update-rc.d uinputkeyboard.sh defaults
+    INSTALLS += target sysv updaterc
+    QMAKE_EXTRA_TARGETS = updaterc
 }
+
+DISTFILES += \
+    uinputkeyboard.sh
