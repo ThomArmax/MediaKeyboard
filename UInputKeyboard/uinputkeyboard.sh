@@ -1,5 +1,15 @@
 #!/bin/sh -e
 
+### BEGIN INIT INFO
+# Provides:          uinputkeyboard
+# Required-Start:
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Starts the UInputKeyboard daemon
+# Description:       Starts the UInputKeyboard daemon
+### END INIT INFO
+
 DAEMON="/usr/local/bin/UInputKeyboard"
 daemon_OPT=""
 DAEMONUSER="root"
