@@ -26,10 +26,10 @@ target.path = $$PREFIX/bin
 unix {
     sysv.files = $${_PRO_FILE_PWD_}/uinputkeyboard.sh
     sysv.path = /etc/init.d/
-    updaterc.command = update-rc.d uinputkeyboard defaults
-    updaterc.depends = sysv
     updaterc.target = update-rc
-    INSTALLS += target sysv
+    updaterc.path = /etc/init.d/
+    updaterc.commands = update-rc.d uinputkeyboard.sh defaults
+    INSTALLS += target sysv updaterc
     QMAKE_EXTRA_TARGETS = updaterc
 }
 
