@@ -24,14 +24,24 @@ isEmpty(PREFIX) {
 target.path = $$PREFIX/bin
 
 unix {
-    sysv.files = $${_PRO_FILE_PWD_}/uinputkeyboard.sh
+    sysvchmod.target = sysvchmod
+    sysvchmod.commands = $$system("chmod +x $${OUT_PWD}/uinputkeyboard.sh")
+
+    sysvconfig.target = sysvconfig
+    sysvconfig.commands = $$system("sed 's%@PREFIX@%$${PREFIX}%g' $${_PRO_FILE_PWD_}/uinputkeyboard.sh.in > $${OUT_PWD}/uinputkeyboard.sh")
+    sysvconfig.depends = sysvchmod
+
+    sysv.files = $${OUT_PWD}/uinputkeyboard.sh
     sysv.path = /etc/init.d/
+    sysv.depends = sysvconfig
+
     updaterc.target = update-rc
     updaterc.path = /etc/init.d/
     updaterc.commands = update-rc.d uinputkeyboard.sh defaults
+
     INSTALLS += target sysv updaterc
-    QMAKE_EXTRA_TARGETS = updaterc
+    QMAKE_EXTRA_TARGETS = updaterc sysvchmod sysvconfig
 }
 
 DISTFILES += \
-    uinputkeyboard.sh
+    uinputkeyboard.sh.in
