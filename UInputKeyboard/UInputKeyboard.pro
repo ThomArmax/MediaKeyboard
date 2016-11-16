@@ -44,4 +44,5 @@ unix {
 }
 
 DISTFILES += \
-    uinputkeyboard.sh.in
+    uinputkeyboard.sh.in \
+    README.md \
