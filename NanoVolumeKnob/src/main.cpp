@@ -7,6 +7,10 @@ volatile unsigned int encoder0Pos = 0;  /**< @brief Rotary encore position */
 volatile unsigned int key = 0;          /**< @brief Key code to be sent */
 volatile bool keySent = false;          /**< @brief Key send state */
 
+// Debounce parameters (expressed in ms)
+unsigned long lastDebounceTime = 0;     /**< @brief The last time rotary encoder switch button was toggled */
+unsigned long debounceDelay = 250;      /**< @brief The debounce time */
+
 // Forward declarations
 void doEncoder_Expanded();
 void doEncoder();
@@ -31,7 +35,7 @@ void setup()
 
     // Interrupts configuration
     attachInterrupt(0, doEncoder, CHANGE);
-    attachInterrupt(1, doClick, CHANGE);
+    attachInterrupt(1, doClick, FALLING);
 
     Serial.begin(9600);
 }
@@ -50,8 +54,10 @@ void loop()
  */
 void doClick()
 {
-    if (digitalRead(encoderButton) == LOW) {
+    unsigned long currentTime = millis();
+    if ((currentTime - lastDebounceTime) > debounceDelay) {
         key = KEY_PLAYPAUSE;
+        lastDebounceTime = millis();
         keySent = false;
     }
 }
