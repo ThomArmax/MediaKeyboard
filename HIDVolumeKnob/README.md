@@ -11,3 +11,6 @@ Handled keys:
 * Volume Up
 * Volume Down
 * Play/Pause
+
+
+![HIDVolumeKnob](HIDVolumeKnob.jpg)
