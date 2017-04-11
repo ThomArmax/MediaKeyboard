@@ -12,9 +12,14 @@ static const unsigned int encoder0PinA  = 0;
 static const unsigned int encoder0PinB  = 1;
 static const unsigned int encoderButton = 7;
 
+// Toast management
+static const unsigned int toastDuration = 1500;
+unsigned long lastToastTime = 0;
+
 volatile unsigned int encoder0Pos = 0;  /**< @brief Rotary encore position */
 volatile unsigned int key = 0;          /**< @brief Key code to be sent */
 volatile bool keySent = false;          /**< @brief Key send state */
+volatile bool clearAndUpdate = true;    /**< @brief Used in loop to tells if the screen should be cleared and updated */
 
 // Debounce parameters (expressed in ms)
 unsigned long lastDebounceTime = 0;     /**< @brief The last time rotary encoder switch button was toggled */
@@ -69,40 +74,40 @@ void setup() {
     display.display();
 }
 
+void showToastInfo(const char* string) {
+    display.clearDisplay();
+    display.setCursor(30, 15);
+    display.println(string);
+    display.display();
+    clearAndUpdate = false;
+}
 
 void loop() {
-    display.clearDisplay();
+    // Toast time elapsed
+    unsigned long currentTime = millis();
+    if ((currentTime - lastToastTime) > toastDuration) {
+        lastToastTime = millis();
+        clearAndUpdate = true;
+    }
 
-    if (!isMediaPlayerDetected) {
+    if (!isMediaPlayerDetected && clearAndUpdate) {
+        display.clearDisplay();
         display.setCursor(0, 0);
         display.println("No media player");
         display.println("detected");
+        display.display();
     }
-
-    display.display();
 
     if (!keySent) {
         Consumer.write(key);
         keySent = true;
 
-        if (key == MEDIA_PLAY_PAUSE) {
-            display.clearDisplay();
-            display.setCursor(10, 10);
-            display.println("PLAY/PAUSE");
-            display.display();
-        }
-        else if (key == MEDIA_VOLUME_UP) {
-            display.clearDisplay();
-            display.setCursor(10, 10);
-            display.println("VOLUME UP");
-            display.display();
-        }
-        else if (key == MEDIA_VOLUME_DOWN) {
-            display.clearDisplay();
-            display.setCursor(10, 10);
-            display.println("VOLUME DOWN");
-            display.display();
-        }
+        if (key == MEDIA_PLAY_PAUSE)
+            showToastInfo("PLAY/PAUSE");
+        else if (key == MEDIA_VOLUME_UP)
+            showToastInfo("VOLUME UP");
+        else if (key == MEDIA_VOLUME_DOWN)
+            showToastInfo("VOLUME DOWN");
     }
     delay(50);
 }
