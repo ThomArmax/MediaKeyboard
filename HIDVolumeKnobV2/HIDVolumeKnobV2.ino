@@ -20,6 +20,8 @@ volatile bool keySent = false;          /**< @brief Key send state */
 unsigned long lastDebounceTime = 0;     /**< @brief The last time rotary encoder switch button was toggled */
 unsigned long debounceDelay = 250;      /**< @brief The debounce time */
 
+bool isMediaPlayerDetected = false;     /**< @brief Tells if a media player hase been detected or not */
+
 // Forward declarations
 void doEncoder_Expanded();
 void doEncoder();
@@ -63,13 +65,20 @@ void setup() {
     display.display();
 
     delay(2000);
+    display.clearDisplay();
+    display.display();
 }
 
 
 void loop() {
-
-    // Clear the buffer.
     display.clearDisplay();
+
+    if (!isMediaPlayerDetected) {
+        display.setCursor(0, 0);
+        display.println("No media player");
+        display.println("detected");
+    }
+
     display.display();
 
     if (!keySent) {
@@ -77,16 +86,19 @@ void loop() {
         keySent = true;
 
         if (key == MEDIA_PLAY_PAUSE) {
+            display.clearDisplay();
             display.setCursor(10, 10);
             display.println("PLAY/PAUSE");
             display.display();
         }
         else if (key == MEDIA_VOLUME_UP) {
+            display.clearDisplay();
             display.setCursor(10, 10);
             display.println("VOLUME UP");
             display.display();
         }
         else if (key == MEDIA_VOLUME_DOWN) {
+            display.clearDisplay();
             display.setCursor(10, 10);
             display.println("VOLUME DOWN");
             display.display();
