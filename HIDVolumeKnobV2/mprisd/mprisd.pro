@@ -11,10 +11,16 @@ TARGET = mprisd
 CONFIG += console
 CONFIG -= app_bundle
 
+DEFINES += QT_BUILD
+
 TEMPLATE = app
 
+INCLUDEPATH += ../
+
 SOURCES += main.cpp \
-    serialconnection.cpp
+    serialconnection.cpp \
+    ../oleddata.cpp
 
 HEADERS += \
-    serialconnection.h
+    serialconnection.h \
+    ../oleddata.h
