@@ -1,9 +1,9 @@
-#include "HID-Project.h"
-
+#include <HID-Project.h>
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include "oleddata.h"
 
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
@@ -36,7 +36,14 @@ void doClick();
 #error("Height incorrect, please fix Adafruit_SSD1306.h!");
 #endif
 
-void setup() {
+// Meta data
+/**
+ * @brief olds the meta datas
+ */
+char* metaDatas[4] = { NULL, NULL, NULL, NULL };
+
+void setup()
+{
     Consumer.begin();
 
     // Encoder configuration
@@ -74,7 +81,12 @@ void setup() {
     display.display();
 }
 
-void showToastInfo(const char* string) {
+/**
+ * @brief Displays the given string as a 'toast'
+ * @param string string to be displayed
+ */
+void showToastInfo(const char* string)
+{
     display.clearDisplay();
     display.setCursor(30, 15);
     display.println(string);
@@ -82,7 +94,36 @@ void showToastInfo(const char* string) {
     clearAndUpdate = false;
 }
 
-void loop() {
+/**
+ * @brief Show the meta datas
+ */
+void showMetaData()
+{
+    display.clearDisplay();
+    for (int i = 0; i < 4; i++) {
+        char* data = metaDatas[i];
+        int cursorPosition = 8 * i;
+        display.setCursor(0, cursorPosition);
+        display.println(data);
+    }
+    display.display();
+}
+
+/**
+ * @brief Sets the meta data for the given index
+ * @param index
+ * @param data
+ */
+void setMetaData(int index, const char *data)
+{
+    if (metaDatas[index])
+        free(metaDatas[index]);
+    metaDatas[index] = (char*)malloc(strlen(data) * sizeof(char));
+    strcpy(metaDatas[index], data);
+}
+
+void loop()
+{
     // Toast time elapsed
     unsigned long currentTime = millis();
     if ((currentTime - lastToastTime) > toastDuration) {
@@ -90,12 +131,30 @@ void loop() {
         clearAndUpdate = true;
     }
 
-    if (!isMediaPlayerDetected && clearAndUpdate) {
-        display.clearDisplay();
-        display.setCursor(0, 0);
-        display.println("No media player");
-        display.println("detected");
-        display.display();
+    int availableBytes = Serial.available();
+    if (availableBytes && clearAndUpdate) {
+        isMediaPlayerDetected = true;
+        char *data = (char *)malloc(availableBytes * sizeof(char));
+        Serial.readBytes(data, availableBytes);
+        OLEDData oledData;
+        if (OLEDData::decode(data, availableBytes, &oledData)) {
+            //display.clearDisplay();
+            switch (oledData.type()) {
+            case OLEDData::Artist:
+                setMetaData(0, oledData.data());
+                break;
+            case OLEDData::Album:
+                setMetaData(1, oledData.data());
+                break;
+            case OLEDData::Track:
+                setMetaData(2, oledData.data());
+                break;
+            default:
+                break;
+            }
+        }
+        free(data);
+        showMetaData();
     }
 
     if (!keySent) {
