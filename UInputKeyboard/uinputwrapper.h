@@ -20,19 +20,19 @@ public:
         BusHIL          = 0x04,
         BusBluetooth    = 0x05,
         BusVirtual      = 0x06,
-        BusISA			= 0x10,
-        BusI8042		= 0x11,
-        BusXTKBD		= 0x12,
-        BusRS232		= 0x13,
-        BusGamePort		= 0x14,
-        BusParPort		= 0x15,
-        BusAMIGA		= 0x16,
-        BusADB			= 0x17,
-        BusI2C			= 0x18,
+        BusISA          = 0x10,
+        BusI8042        = 0x11,
+        BusXTKBD        = 0x12,
+        BusRS232        = 0x13,
+        BusGamePort     = 0x14,
+        BusParPort      = 0x15,
+        BusAMIGA        = 0x16,
+        BusADB          = 0x17,
+        BusI2C          = 0x18,
         BusHhost        = 0x19,
-        BusGSC			= 0x1A,
-        BusAtari		= 0x1B,
-        BusSPI			= 0x1C
+        BusGSC          = 0x1A,
+        BusAtari        = 0x1B,
+        BusSPI          = 0x1C
     };
 
     /**
