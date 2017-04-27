@@ -5,7 +5,7 @@ This second version consists in a HID device with a rotary encoder and a OLED sc
 - The OLED screen is used to display informations related to the played song (artist, album, track, ...).
 Those informations are sent via the serial port from the computer
 
-![HIDVolumeKnobV2](HIDVolumeKnobV2/HIDVolumeKnobV2.jpg)
+![HIDVolumeKnobV2](/HIDVolumeKnobV2/HIDVolumeKnobV2.jpg)
 
 ## Project's dependencies
 This project use the following libraries:
