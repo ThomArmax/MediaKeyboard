@@ -6,6 +6,9 @@
 
 class QSerialPort;
 
+/**
+ * @brief Serial connection with the volume knob
+ */
 class SerialConnection : public QObject
 {
     Q_OBJECT

@@ -4,6 +4,11 @@
 #include <QTime>
 #include <QDebug>
 
+//_________________________________________________________________
+/**
+ * @brief Constuct a new SerialConnection
+ * @param parent parent QObject
+ */
 SerialConnection::SerialConnection(QObject *parent)
     : QObject(parent)
     , m_pPort(new QSerialPort(this))
@@ -19,6 +24,12 @@ SerialConnection::SerialConnection(QObject *parent)
     timerEvent(NULL);
 }
 
+//_________________________________________________________________
+/**
+ * @brief Sends the given QByateArray
+ * @param data data to be sent
+ * @return true if succeeded; false otherwise
+ */
 bool SerialConnection::send(const QByteArray &data)
 {
     int toSend = data.size();
@@ -28,6 +39,12 @@ bool SerialConnection::send(const QByteArray &data)
     return success;
 }
 
+//_________________________________________________________________
+/**
+ * @brief Sends the given OLEDData
+ * @param oledData OLEDData to be sent
+ * @return true if succeeded; false otherwise
+ */
 bool SerialConnection::send(const OLEDData &oledData)
 {
     char *encodedData = NULL;
@@ -44,17 +61,32 @@ bool SerialConnection::send(const OLEDData &oledData)
     return false;
 }
 
+//_________________________________________________________________
+/**
+ * @brief Sends the given buffer
+ * @param data data to be sent
+ * @param size data' size
+ * @return true if succeeded; false otherwise
+ */
 bool SerialConnection::send(const char *data, const int size)
 {
     qDebug() << data;
     return m_pPort->write(data) == size;
 }
 
+//_________________________________________________________________
+/**
+ * @brief Called when data are received on the serial port
+ */
 void SerialConnection::onReadyRead()
 {
     qDebug() << m_pPort->readAll();
 }
 
+//_________________________________________________________________
+/**
+ * @brief Event handler
+ */
 void SerialConnection::timerEvent(QTimerEvent */*event*/)
 {
     QString data(QTime::currentTime().toString("hh:mm:ss zzz"));
