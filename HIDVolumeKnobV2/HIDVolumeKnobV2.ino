@@ -19,7 +19,7 @@ unsigned long lastToastTime = 0;
 volatile unsigned int encoder0Pos = 0;  /**< @brief Rotary encore position */
 volatile unsigned int key = 0;          /**< @brief Key code to be sent */
 volatile bool keySent = false;          /**< @brief Key send state */
-volatile bool clearAndUpdate = true;    /**< @brief Used in loop to tells if the screen should be cleared and updated */
+volatile bool isInToastMode = true;     /**< @brief Tells if we are in 'toast' mode. If yes, the meta data are not displayed */
 
 // Debounce parameters (expressed in ms)
 unsigned long lastDebounceTime = 0;     /**< @brief The last time rotary encoder switch button was toggled */
@@ -91,7 +91,7 @@ void showToastInfo(const char* string)
     display.setCursor(30, 15);
     display.println(string);
     display.display();
-    clearAndUpdate = false;
+    isInToastMode = true;
 }
 
 /**
@@ -128,11 +128,11 @@ void loop()
     unsigned long currentTime = millis();
     if ((currentTime - lastToastTime) > toastDuration) {
         lastToastTime = millis();
-        clearAndUpdate = true;
+        isInToastMode = false;
     }
 
     int availableBytes = Serial.available();
-    if (availableBytes && clearAndUpdate) {
+    if (availableBytes) {
         isMediaPlayerDetected = true;
         char *data = (char *)malloc(availableBytes * sizeof(char));
         Serial.readBytes(data, availableBytes);
@@ -154,8 +154,10 @@ void loop()
             }
         }
         free(data);
-        showMetaData();
     }
+
+    if (!isInToastMode)
+        showMetaData();
 
     if (!keySent) {
         Consumer.write(key);
