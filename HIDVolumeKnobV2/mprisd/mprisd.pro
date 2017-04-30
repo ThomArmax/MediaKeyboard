@@ -19,8 +19,13 @@ INCLUDEPATH += ../
 
 SOURCES += main.cpp \
     serialconnection.cpp \
-    ../oleddata.cpp
+    mediaplayer2interface.cpp \
+    ../oleddata.cpp \
 
 HEADERS += \
     serialconnection.h \
-    ../oleddata.h
+    mediaplayer2interface.h \
+    ../oleddata.h \
+
+OTHER_FILES += \
+    org.mpris.MediaPlayer2.xml \
