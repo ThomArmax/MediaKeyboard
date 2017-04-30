@@ -1,11 +1,7 @@
 QT += core dbus serialport
 QT -= gui
 
-CONFIG += c++11 link_pkgconfig
-#PKGCONFIG = dbusextended-qt5
-
-#LIBS += -ldbusextended-qt5
-#LIBS += -lmpris-qt5
+CONFIG += c++11
 
 include(common.pri)
 
