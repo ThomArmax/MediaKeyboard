@@ -16,10 +16,12 @@ TEMPLATE = app
 SOURCES += main.cpp \
     serialconnection.cpp \
     mediaplayer2interface.cpp \
+    mediaplayer2propertiesinterface.cpp \
 
 HEADERS += \
     serialconnection.h \
     mediaplayer2interface.h \
+    mediaplayer2propertiesinterface.h \
 
 OTHER_FILES += \
     org.mpris.MediaPlayer2.xml \
