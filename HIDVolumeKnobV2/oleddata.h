@@ -26,6 +26,7 @@ public:
     };
 
     explicit OLEDData();
+    OLEDData(const OLEDData &other);
     OLEDData(const DataType type, const char *data);
     ~OLEDData();
 

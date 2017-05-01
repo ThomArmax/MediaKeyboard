@@ -30,6 +30,19 @@ OLEDData::OLEDData(const DataType type, const char *data)
 
 //_________________________________________________________________
 /**
+ * @brief Copy constructor
+ * @param other
+ */
+OLEDData::OLEDData(const OLEDData &other)
+    : m_type(Undefined)
+    //, m_data("")
+{
+    setType(other.type());
+    setData(other.data());
+}
+
+//_________________________________________________________________
+/**
  * @brief Destroy the OLEDData of frees the allocated ressources
  */
 OLEDData::~OLEDData()
