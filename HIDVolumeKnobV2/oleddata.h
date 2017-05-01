@@ -2,6 +2,7 @@
 #define OLEDDATA_H
 
 #include <stdlib.h>
+#define MAX_OLEDDATA_LEN 128
 
 /**
  * @brief Represents the data to displayed on the OLED screen
@@ -42,7 +43,7 @@ public:
 
 private:
     DataType m_type;
-    char *m_data;
+    char m_data[MAX_OLEDDATA_LEN];
 };
 
 #endif // OLEDDATA_H

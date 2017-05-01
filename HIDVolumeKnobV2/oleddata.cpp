@@ -1,6 +1,7 @@
 #include "oleddata.h"
 #include <string.h>
 #include <stdint.h>
+#include <stdio.h>
 
 //_________________________________________________________________
 /**
@@ -8,9 +9,9 @@
  */
 OLEDData::OLEDData()
     : m_type(Undefined)
-    , m_data(NULL)
+    //, m_data()
 {
-
+    memset(&m_data[0], 0, MAX_OLEDDATA_LEN);
 }
 
 //_________________________________________________________________
@@ -21,7 +22,7 @@ OLEDData::OLEDData()
  */
 OLEDData::OLEDData(const DataType type, const char *data)
     : m_type(Undefined)
-    , m_data(NULL)
+    //, m_data("")
 {
     setType(type);
     setData(data);
@@ -33,8 +34,7 @@ OLEDData::OLEDData(const DataType type, const char *data)
  */
 OLEDData::~OLEDData()
 {
-    if (m_data)
-        free(m_data);
+
 }
 
 //_________________________________________________________________
@@ -79,7 +79,7 @@ void OLEDData::setType(DataType type)
  */
 const char *OLEDData::data() const
 {
-    return m_data;
+    return &m_data[0];
 }
 
 //_________________________________________________________________
@@ -92,17 +92,8 @@ const char *OLEDData::data() const
  */
 bool OLEDData::setData(const char *data)
 {
-    size_t dataSize = strlen(data);
-
-    if (m_data)
-        free(m_data);
-
-    m_data = static_cast<char*>(malloc(dataSize+1));
-    if (!m_data)
-        return false;
-
-    memset(m_data, 0, dataSize);
-    strcpy(m_data, data);
+    memset(&m_data[0], 0, MAX_OLEDDATA_LEN);
+    strncpy(&m_data[0], data, MAX_OLEDDATA_LEN);
 
     return true;
 }
