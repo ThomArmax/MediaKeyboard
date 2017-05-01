@@ -45,3 +45,20 @@ MetaData MetaData::fromMap(const QVariantMap &map)
 
     return metaData;
 }
+
+bool MetaData::operator ==(const MetaData& other)
+{
+    return (
+                (artUrl == other.artUrl) &&
+                (length == other.length) &&
+                (trackId == other.trackId) &&
+                (album == other.album) &&
+                (albumArtist == other.albumArtist) &&
+                (artist == other.artist) &&
+                (autoRating == other.autoRating) &&
+                (discNumber == other.discNumber) &&
+                (title == other.title) &&
+                (trackNumber == other.trackNumber) &&
+                (url == other.url)
+                );
+}

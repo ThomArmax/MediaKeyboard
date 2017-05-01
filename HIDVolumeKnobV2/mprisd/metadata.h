@@ -9,6 +9,8 @@ public:
     MetaData();
     static MetaData fromMap(const QVariantMap &map);
 
+    bool operator==(const MetaData& other);
+
     QString artUrl;             // "mpris:artUrl" QString
     quint64 length;             // "mpris:length" qulonglong
     QString trackId;            // "mpris:trackid" QString
