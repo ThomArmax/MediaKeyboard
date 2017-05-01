@@ -12,6 +12,10 @@ static const QString Title          = "xesam:title";
 static const QString TrackNumber    = "xesam:trackNumber";
 static const QString Url            = "xesam:url";
 
+//_________________________________________________________________
+/**
+ * @brief Construct a MetaData object with empty or null values
+ */
 MetaData::MetaData()
     : artUrl(QString())
     , length(0)
@@ -28,6 +32,12 @@ MetaData::MetaData()
 
 }
 
+//_________________________________________________________________
+/**
+ * @brief Construct a MetaData from the given map
+ * @param map
+ * @return the constructed MetaData
+ */
 MetaData MetaData::fromMap(const QVariantMap &map)
 {
     MetaData metaData;
@@ -46,6 +56,12 @@ MetaData MetaData::fromMap(const QVariantMap &map)
     return metaData;
 }
 
+//_________________________________________________________________
+/**
+ * @brief MetaData::operator ==
+ * @param other
+ * @return
+ */
 bool MetaData::operator ==(const MetaData& other)
 {
     return (
@@ -63,6 +79,11 @@ bool MetaData::operator ==(const MetaData& other)
                 );
 }
 
+//_________________________________________________________________
+/**
+ * @brief Converts the MetaData into a list of OLEDData
+ * @return the MetaData converted into a list of OLEDData
+ */
 QList<OLEDData> MetaData::toOledData() const
 {
     QList<OLEDData> data;
