@@ -9,11 +9,6 @@
 class OLEDData
 {
 public:
-    explicit OLEDData();
-    ~OLEDData();
-
-    bool operator==(const OLEDData& other);
-
     /**
      * @brief Defines the data's type
      */
@@ -28,6 +23,12 @@ public:
         Duration,       //!< Track's duration
         Volume          //!< Player's volume
     };
+
+    explicit OLEDData();
+    OLEDData(const DataType type, const char *data);
+    ~OLEDData();
+
+    bool operator==(const OLEDData& other);
 
     DataType type() const;
     void setType(DataType type);

@@ -15,6 +15,20 @@ OLEDData::OLEDData()
 
 //_________________________________________________________________
 /**
+ * @brief Construct a new OLEDData with the given data
+ * @param type
+ * @param data
+ */
+OLEDData::OLEDData(const DataType type, const char *data)
+    : m_type(Undefined)
+    , m_data(NULL)
+{
+    setType(type);
+    setData(data);
+}
+
+//_________________________________________________________________
+/**
  * @brief Destroy the OLEDData of frees the allocated ressources
  */
 OLEDData::~OLEDData()
