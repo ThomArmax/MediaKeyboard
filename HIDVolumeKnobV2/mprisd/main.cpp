@@ -1,12 +1,13 @@
 #include <QCoreApplication>
 
-#include "serialconnection.h"
+#include "mpriswatcher.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    SerialConnection connection;
+    MPRISWatcher watcher;
+    watcher.start();
 
     return a.exec();
 }
