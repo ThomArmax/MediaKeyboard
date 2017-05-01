@@ -15,12 +15,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     serialconnection.cpp \
+    mediaplayer2.cpp \
     mediaplayer2interface.cpp \
     mediaplayer2propertiesinterface.cpp \
     metadata.cpp
 
 HEADERS += \
     serialconnection.h \
+    mediaplayer2.h \
     mediaplayer2interface.h \
     mediaplayer2propertiesinterface.h \
     metadata.h
