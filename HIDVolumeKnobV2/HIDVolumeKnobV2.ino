@@ -170,7 +170,6 @@ void loop()
         else if (key == MEDIA_VOLUME_DOWN)
             showToastInfo("VOLUME DOWN");
     }
-    delay(50);
 }
 
 /**
