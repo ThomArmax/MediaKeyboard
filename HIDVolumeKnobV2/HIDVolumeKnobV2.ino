@@ -4,6 +4,7 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include "oleddata.h"
+#include "gfx.h"
 
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
@@ -102,9 +103,15 @@ void showMetaData()
     display.clearDisplay();
     for (int i = 0; i < 4; i++) {
         char* data = metaDatas[i];
-        int cursorPosition = 8 * i;
-        display.setCursor(0, cursorPosition);
+        int cursorPosition = 15 * i;
+        display.setCursor(20, cursorPosition + 5);
         display.println(data);
+        if (i == 0)
+            display.drawXBitmap(0, cursorPosition, artist_15x15_bits, IMG_ARTIST_WIDTH, IMG_ARTIST_HEIGHT, WHITE);
+        else if (i == 1)
+            display.drawXBitmap(0, cursorPosition, album_15x15_bits, IMG_ALBUM_WIDTH, IMG_ALBUM_HEIGHT, WHITE);
+        else if (i == 2)
+            display.drawXBitmap(0, cursorPosition, track_15x15_bits, IMG_TRACK_WIDTH, IMG_TRACK_HEIGHT, WHITE);
     }
     display.display();
 }
