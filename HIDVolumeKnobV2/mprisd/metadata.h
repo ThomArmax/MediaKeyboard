@@ -2,12 +2,14 @@
 #define METADATA_H
 
 #include <QVariantMap>
+#include "oleddata.h"
 
 class MetaData
 {
 public:
     MetaData();
     static MetaData fromMap(const QVariantMap &map);
+    QList<OLEDData> toOledData() const;
 
     bool operator==(const MetaData& other);
 

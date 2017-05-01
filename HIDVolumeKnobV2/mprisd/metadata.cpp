@@ -62,3 +62,14 @@ bool MetaData::operator ==(const MetaData& other)
                 (url == other.url)
                 );
 }
+
+QList<OLEDData> MetaData::toOledData() const
+{
+    QList<OLEDData> data;
+
+    data << OLEDData(OLEDData::Artist, qPrintable(artist));
+    data << OLEDData(OLEDData::Album, qPrintable(album));
+    data << OLEDData(OLEDData::Track, qPrintable(title));
+
+    return data;
+}
