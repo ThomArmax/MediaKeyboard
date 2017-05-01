@@ -24,9 +24,6 @@ private slots:
     void onReadyRead();
 
 private:
-    void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
-
-private:
     QSerialPort *m_pPort;
 };
 
